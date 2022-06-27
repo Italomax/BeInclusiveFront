@@ -1,0 +1,77 @@
+/* adicionar tamanh fontes  You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=ABeeZee&family=Text+Me+One&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.fs-54 {
+  font-size: 54pt;
+}
+
+.fs-58 {
+  font-size: 18pt;
+}
+
+.fs-60 {
+  font-size: 14pt;
+}
+
+.title-beInc {
+  font-family: "Text Me One", sans-serif;
+  font-size: 52px;
+  color: #8ab872;
+}
+
+.bg-color-beInc {
+  background-color: #b0d497;
+}
+
+.bg-top{
+    background-color: #b0d497 !important;
+}
+
+.bg-yellow{
+  background-color: #F3FBE8 !important;
+}
+
+.button{
+  background-color: #b0d497 !important;
+  font-family: "Text Me One", sans-serif;
+  font-size: 52px;
+  color: #000000;
+}
+
+#bg-color-beInc2 {
+  color: white;
+  border: none;
+  background-color: #8ab872;
+}
+
+.text-beInc {
+  font-family: "ABeeZee", sans-serif;
+}
+
+.img-bg {
+  overflow-x: hidden;
+  min-height: 68.5vh;
+}
+
+.imagem {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.home_buttons {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+
+

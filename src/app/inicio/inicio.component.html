@@ -1,0 +1,366 @@
+<div class="container-fluid flex-wrap d-flex justify-content-center mt-5">
+  <div class="row">
+    <!-- ! Coluna de perfil do Usuário-->
+    <div class="col-md-2 m-0 pl-5">
+      <div class="bg-color-beInc d-flex justify-content-center rounded p-4">
+        <img
+          src="{{ foto }}"
+          class="rounded-circle"
+          onerror=" this.src = 'https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744034?k=20&m=1016744034&s=170667a&w=0&h=JlerB4H3IeLolDMQOYiAF9uLuZeW0bs4jH6NdrNPDtE='"
+          width="100px"
+          height="100px"
+        />
+      </div>
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">{{ nome }}</h5>
+          <p class="card-text">
+            Mudar pode dar medo, mas é uma aventura que pode te levar muito longe.
+          </p>
+          <a
+            class="btn btn-outline-light text-beInc"
+            id="bg-color-beInc2"
+            [routerLink]="['/usuario-edit', idUser]"
+            >Editar perfil
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- ! /Coluna de perfil do Usuário-->
+    <!-- ! Coluna de postagens -->
+    <div class="col-md-8">
+      <div class="col-md-12 vw-100">
+        <div class="card rounded">
+          <div class="card-body">
+            <h5 class="card-title">
+              <img
+                src="{{ foto }}"
+                class="rounded-circle"
+                onerror=" this.src = 'https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744034?k=20&m=1016744034&s=170667a&w=0&h=JlerB4H3IeLolDMQOYiAF9uLuZeW0bs4jH6NdrNPDtE='"
+                width="50px"
+                height="50px"
+              />
+              {{ nome }}
+            </h5>
+            <textarea
+              rows="1"
+              placeholder="O que você gostaria de compartilhar?"
+              data-toggle="modal"
+              data-target="#novaPostagem"
+              class="form-control mt-3 text-center text-dark"
+              readonly
+            ></textarea>
+            <hr />
+          </div>
+        </div>
+
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="todasPostagens"
+            role="tabpanel"
+            aria-labelledby="todasPostagens"
+          >
+            <div *ngIf="user.categoria == 'PACIENTE'"
+              class="mt-5 card-columns d-flex justify-content-center flex-wrap border-md"
+            >
+              <ng-container *ngFor="let item of listaPostagens | orderBy : key : reverse">
+                <div
+                  class="card text-center"
+                  *ngIf="item.tema.avaliacao == user.avaliacao"
+                >
+                  <div class="card-body">
+                    <img
+                      src="{{ item.usuario.foto }}"
+                      class="rounded-circle"
+                      onerror=" this.src = 'https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744034?k=20&m=1016744034&s=170667a&w=0&h=JlerB4H3IeLolDMQOYiAF9uLuZeW0bs4jH6NdrNPDtE='"
+                      width="50px"
+                      height="50px"
+                    />
+                    <h5 class="card-title m-0">{{ item.titulo }}</h5>
+                    <small class="text-muted">
+                      Tema: {{ item.tema.avaliacao }}</small
+                    >
+                    <p class="card-text mt-3">{{ item.descricao }}</p>
+                    <p class="card-text">
+                      <small class="text-muted"
+                        >{{ item.date | date: "dd/MM/yyyy" }} às
+                        {{ item.date | date: "HH:mm" }}</small
+                      >
+                    </p>
+                    <p class="card-text">
+                      <small class="text-muted">{{ item.usuario.nome }}</small>
+                    </p>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div *ngIf="user.categoria == 'VOLUNTARIO'"
+              class="mt-5 card-columns d-flex justify-content-center flex-wrap border-md"
+            >
+              <ng-container *ngFor="let item of listaPostagens | orderBy : key : reverse">
+                <div
+                  class="card text-center"
+                
+                >
+                  <div class="card-body">
+                    <img
+                      src="{{ item.usuario.foto }}"
+                      class="rounded-circle"
+                      onerror=" this.src = 'https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744034?k=20&m=1016744034&s=170667a&w=0&h=JlerB4H3IeLolDMQOYiAF9uLuZeW0bs4jH6NdrNPDtE='"
+                      width="50px"
+                      height="50px"
+                    />
+                    <h5 class="card-title m-0">{{ item.titulo }}</h5>
+                    <small class="text-muted">
+                      Tema: {{ item.tema.avaliacao }}</small
+                    >
+                    <p class="card-text mt-3">{{ item.descricao }}</p>
+                    <p class="card-text">
+                      <small class="text-muted"
+                        >{{ item.date | date: "dd/MM/yyyy" }} às
+                        {{ item.date | date: "HH:mm" }}</small
+                      >
+                    </p>
+                    <p class="card-text">
+                      <small class="text-muted">{{ item.usuario.nome }}</small>
+                    </p>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="minhasPostagens"
+            role="tabpanel"
+            aria-labelledby="minhasPostagens"
+          >
+            <div
+              class="mt-5 card-columns d-flex justify-content-center flex-wrap border-md"
+            >
+              <div class="card text-center" *ngFor="let item of user.postagem | orderBy : key : reverse">
+                <div class="card-body">
+                  <img
+                    src="{{ foto }}"
+                    class="rounded-circle"
+                    onerror=" this.src = 'https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744034?k=20&m=1016744034&s=170667a&w=0&h=JlerB4H3IeLolDMQOYiAF9uLuZeW0bs4jH6NdrNPDtE='"
+                    width="50px"
+                    height="50px"
+                  />
+                  <h5 class="card-title m-0">{{ item.titulo }}</h5>
+                  <!-- <small class="text-muted">
+                    Tema: {{ item.tema.avaliacao }}</small
+                  > -->
+                  <p class="card-text mt-3">{{ item.descricao }}</p>
+                  <p *ngIf="user.categoria == 'VOLUNTARIO'" class="card-text mt-3">{{ item.tema.avaliacao }}</p>
+                  <p class="card-text">
+                    <small class="text-muted"
+                      >{{ item.date | date: "dd/MM/yyyy" }} às
+                      {{ item.date | date: "HH:mm" }}</small
+                    >
+                  </p>
+                  <a [routerLink]="['/postagem-edit',item.id]" class="text-info mr-3" href="">Editar</a>
+                  <a [routerLink]="['/postagem-delete', item.id]" class="text-danger" href="">Apagar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="novaPostagem"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="TituloModalCentralizado"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Nova Postagem
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="titulo">Titulo</label>
+                <input
+                  [(ngModel)]="postagem.titulo"
+                  type="text"
+                  class="form-control"
+                  id="titulo"
+                  placeholder="Digite o título"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="texto">Texto</label>
+                <textarea
+                  [(ngModel)]="postagem.descricao"
+                  class="form-control"
+                  name="texto"
+                  id="texto"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="tema"
+                  >Escolha um tema
+                </label>
+                <select
+                  name="tema"
+                  id="tema"
+                  class="form-control"
+                  [(ngModel)]="idTema"
+                  (change)="findByIdTema()"
+                >
+                  <option *ngFor="let item of listaTemas" value="{{ item.id }}">
+                    {{ item.avaliacao }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="publicar()"
+                data-dismiss="modal"
+              >
+                Publicar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ! /Coluna de postagens -->
+    <!-- ! Coluna de Opções -->
+    <div class="col-md-2 d-flex justify-content-start pr-5">
+      <div class="card" style="width: 18rem">
+        <div class="card-header bg-top text-beInc font-weight-bold">
+          Conteúdo
+        </div>
+
+        <div class="list-group">
+          <a
+            data-toggle="tab"
+            href="#todasPostagens"
+            role="tab"
+            aria-controls="todasPostagens"
+            aria-selected="true"
+            id="getAllPostagens"
+            (click)="getAllPostagens()"
+            class="list-group-item list-group-item-action text-beInc"
+            aria-current="true"
+          >
+            Todas as postagens
+          </a>
+          <a
+            class="list-group-item list-group-item-action text-beInc"
+            data-toggle="tab"
+            href="#minhasPostagens"
+            role="tab"
+            aria-controls="minhasPostagens"
+            aria-selected="true"
+            (click)="findByIdUsuario()"
+            >Minhas postagens</a
+          >
+        </div>
+        <div class="card d-flex flex-wrap justify-content-center text-beInc">
+          <h5 class="card-header bg-top mt-2 mb-1 text-beInc ">Usuários</h5>
+            <ul class="list-group m-0 rounded" *ngFor="let item of listaUsuarios">
+              <li class="text-beInc list-group-item " *ngIf="item.id != idUser">
+                <h6><img class="rounded-circle" src="{{item.foto}}" onerror=" this.src = 'https://media.istockphoto.com/vectors/profile-placeholder-image-gray-silhouette-no-photo-vector-id1016744034?k=20&m=1016744034&s=170667a&w=0&h=JlerB4H3IeLolDMQOYiAF9uLuZeW0bs4jH6NdrNPDtE='"
+                  width="33px"
+                  height="33px" alt="Foto do perfil de: {{item.nome}}">
+                {{item.nome}} 
+                <small class="text-info" *ngIf="item.categoria == 'VOLUNTARIO'">Voluntário</small>
+                </h6>
+                <ng-container *ngIf="user.categoria == 'VOLUNTARIO'">
+                <a *ngIf="item.categoria == 'PACIENTE'" class="btn btn-outline-success" data-toggle="modal" data-target="#mudarAvaliacao" (click)='buscarUser(item.id)' href=""><small> Mudar Avaliação {{item.avaliacao}}</small></a>
+              </ng-container>
+              </li>
+            </ul>
+        </div>
+      </div>
+      
+    </div>
+    <!-- ! /Coluna de Opções -->
+  </div>
+</div>
+
+<div
+        class="modal fade"
+        id="mudarAvaliacao"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="TituloModalCentralizado"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Mudar Avaliação
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="nome">Nome: {{userAvaliacao.nome}}</label>
+              </div>
+              <div class="form-group">
+                <label for="tipo">Tipo de usuário: {{userAvaliacao.categoria}}</label>
+            </div>
+            <div class="form-group">
+              <label for="avaliacao">Avaliação do usuário</label>
+              <select class="form-control" name="avaliacao" id="avaliacao" (change)="avaliacaoUsuario($event)">
+                  <option>Selecione a categoria do usuário</option>
+                  <option value="AZUL">Azul</option>
+                  <option value="VERDE">Verde</option>
+                  <option value="AMARELO">Amarelo</option>
+              </select>
+          </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="atualizarAvaliacao()"
+                data-dismiss="modal"
+              >
+                Publicar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
